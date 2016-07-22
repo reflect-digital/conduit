@@ -40,16 +40,13 @@ abstract class Connection
             $process = new Process($task->script);
         }
 
-        // Here we'll run the SSH task on the server inline. We do not need to write the
-        // script out to a file or anything. We will start the SSH process then pass
-        // these lines of output back to the parent callback for display purposes.
         else {
             $delimiter = 'EOF-FLUX-CONDUIT';
 
             $process = new Process(
                 "ssh $target 'bash -se' << \\$delimiter".PHP_EOL
                 .'set -e'.PHP_EOL
-                .$task->script.' >> output-'.time().PHP_EOL
+                .$task->script.PHP_EOL
                 .$delimiter
             );
         }

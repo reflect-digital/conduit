@@ -2,11 +2,7 @@
 
 namespace Flux;
 
-use Flux;
 use Flux\Conduit\Container;
-use Flux\Conduit\Task;
-use Illuminate\Filesystem\Filesystem;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class Conduit
 {
