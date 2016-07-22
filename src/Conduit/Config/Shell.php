@@ -43,7 +43,7 @@ class Shell
      * Parse the given configuration string.
      *
      * @param  string  $string
-     * @return \Laravel\Envoy\SSHConfigFile
+     * @return Shell
      */
     public static function parseString($string)
     {
