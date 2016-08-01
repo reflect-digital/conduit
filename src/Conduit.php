@@ -3,6 +3,7 @@
 namespace Flux;
 
 use Flux\Conduit\Container;
+use Symfony\Component\Process\Process;
 
 class Conduit
 {
@@ -46,8 +47,36 @@ class Conduit
 
         $connection = new Conduit\Connection\Shell;
         $tasks->each(function($task) use($connection) {
-            $connection->run($task);
+            $connection->run($task,function ($type, $host, $line) {
+                if (starts_with($line, 'Warning: Permanently added ')) {
+                    return;
+                }
+
+                $this->displayOutput($type, $host, $line);
+            });
         });
+    }
+
+
+    /**
+     * Display the given output line.
+     *
+     * @param  int  $type
+     * @param  string  $host
+     * @param  string  $line
+     * @return void
+     */
+    protected function displayOutput($type, $host, $line)
+    {
+        $lines = explode("\n", $line);
+
+        foreach ($lines as $line) {
+            if (strlen(trim($line)) === 0) {
+                return;
+            }
+
+            print(trim($line).PHP_EOL);
+        }
     }
 
 }
