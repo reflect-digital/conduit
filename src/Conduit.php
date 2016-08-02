@@ -3,6 +3,7 @@
 namespace Flux;
 
 use Flux\Conduit\Container;
+use Illuminate\Support\Collection;
 use Symfony\Component\Process\Process;
 
 class Conduit
@@ -40,23 +41,49 @@ class Conduit
         $this->container = $container;
     }
 
-    public function execute()
+    /**
+     * Execute the task container
+     *
+     * @param bool $displayOutput
+     */
+    public function execute( $displayOutput = false )
     {
 
         $tasks = $this->getContainer()->getTasks();
 
         $connection = new Conduit\Connection\Shell;
-        $tasks->each(function($task) use($connection) {
-            $connection->run($task,function ($type, $host, $line) {
+        $tasks->each(function($task) use($connection, $displayOutput) {
+            $connection->run($task,function ($type, $host, $line) use($task, $displayOutput) {
                 if (starts_with($line, 'Warning: Permanently added ')) {
                     return;
                 }
 
-                $this->displayOutput($type, $host, $line);
+                $task->setOutput($this->formatOutput($line));
+
+                if( $displayOutput ) {
+                    $this->displayOutput($type, $host, $line);
+                }
+
             });
         });
     }
 
+    /**
+     * Format the output
+     *
+     * @param string $output
+     *
+     * @return Collection
+     */
+    protected function formatOutput($output)
+    {
+        $lines = collect(explode("\n", $output));
+
+        return $lines->reject(function($line){
+            return (strlen(trim($line)) === 0);
+        });
+
+    }
 
     /**
      * Display the given output line.
@@ -68,15 +95,9 @@ class Conduit
      */
     protected function displayOutput($type, $host, $line)
     {
-        $lines = explode("\n", $line);
-
-        foreach ($lines as $line) {
-            if (strlen(trim($line)) === 0) {
-                return;
-            }
-
+        $this->formatOutput($line)->each(function($line) {
             print(trim($line).PHP_EOL);
-        }
+        });
     }
 
 }

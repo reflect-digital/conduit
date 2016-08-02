@@ -47,6 +47,9 @@ class Task
     */
     public $confirm;
 
+    /** @var array */
+    protected $output;
+
     /**
      * @return array
      */
@@ -143,6 +146,26 @@ class Task
     public function setConfirm($confirm)
     {
         $this->confirm = $confirm;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOutput()
+    {
+        return $this->output;
+    }
+
+    /**
+     * @param array $output
+     *
+     * @return Task
+     */
+    public function setOutput($output)
+    {
+        $this->output = $output;
 
         return $this;
     }
