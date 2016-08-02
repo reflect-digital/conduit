@@ -79,7 +79,9 @@ class Conduit
     {
         $lines = collect(explode("\n", $output));
 
-        return $lines->reject(function($line){
+        return $lines->transform(function($line) {
+            return trim($line);
+        })->reject(function($line){
             return (strlen(trim($line)) === 0);
         });
 
