@@ -15,8 +15,6 @@ use Flux\Conduit\Task;
 class Shell extends Flux\Conduit\Connection
 {
 
-    use Flux\Conduit\Interactions\ShellConfigParser;
-
     /**
      * Run the given task over SSH.
      *

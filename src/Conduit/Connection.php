@@ -22,8 +22,6 @@ abstract class Connection
      */
     abstract public function run(Task $task, \Closure $callback = null);
 
-    abstract protected function getConfiguredServer($host);
-
     /**
      * Run the given script on the given host.
      *
@@ -34,9 +32,7 @@ abstract class Connection
      */
     protected function getProcess($host, Task $task)
     {
-        $target = $this->getConfiguredServer($host) ?: $host;
-
-        if (in_array($target, ['local', 'localhost', '127.0.0.1'])) {
+        if (in_array($host, ['local', 'localhost', '127.0.0.1'])) {
             $process = new Process($task->script);
         }
 
@@ -44,14 +40,14 @@ abstract class Connection
             $delimiter = 'EOF-FLUX-CONDUIT';
 
             $process = new Process(
-                "ssh $target 'bash -se' << \\$delimiter".PHP_EOL
+                "ssh $host 'bash -se' << \\$delimiter".PHP_EOL
                 .'set -e'.PHP_EOL
                 .$task->script.PHP_EOL
                 .$delimiter
             );
         }
 
-        return [$target, $process->setTimeout(null)];
+        return [$host, $process->setTimeout(null)];
     }
 
     /**

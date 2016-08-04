@@ -18,7 +18,7 @@ class Container
     protected $tasks;
 
     /**
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Support\Collection|Task[]
      */
     public function getTasks()
     {
@@ -37,6 +37,11 @@ class Container
         return $this;
     }
 
+    /**
+     * Container constructor.
+     *
+     * @param array $tasks
+     */
     public function __construct( array $tasks = [] )
     {
         $this->tasks = collect($tasks);

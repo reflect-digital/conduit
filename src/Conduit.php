@@ -3,6 +3,7 @@
 namespace Flux;
 
 use Flux\Conduit\Container;
+use Flux\Conduit\Task;
 use Illuminate\Support\Collection;
 use Symfony\Component\Process\Process;
 
@@ -52,13 +53,14 @@ class Conduit
         $tasks = $this->getContainer()->getTasks();
 
         $connection = new Conduit\Connection\Shell;
-        $tasks->each(function($task) use($connection, $displayOutput) {
+        $tasks->each(function(Task $task) use($connection, $displayOutput) {
             $connection->run($task,function ($type, $host, $line) use($task, $displayOutput) {
+
                 if (starts_with($line, 'Warning: Permanently added ')) {
                     return;
                 }
 
-                $task->setOutput($this->formatOutput($line));
+                $task->appendOutput($this->formatOutput($line));
 
                 if( $displayOutput ) {
                     $this->displayOutput($type, $host, $line);

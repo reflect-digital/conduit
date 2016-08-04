@@ -34,20 +34,10 @@ class Task
     public $script;
 
     /**
-     * Indicates if the task should be run in parallel across servers.
+     * The output from the task executed
      *
      * @var array
      */
-    public $parallel;
-
-    /*
-    * Asks a user for a confirmation.
-    *
-    * @var string
-    */
-    public $confirm;
-
-    /** @var array */
     protected $output;
 
     /**
@@ -113,46 +103,6 @@ class Task
     /**
      * @return array
      */
-    public function getParallel()
-    {
-        return $this->parallel;
-    }
-
-    /**
-     * @param array $parallel
-     *
-     * @return Task
-     */
-    public function setParallel($parallel)
-    {
-        $this->parallel = $parallel;
-
-        return $this;
-    }
-
-    /**
-     * @return null
-     */
-    public function getConfirm()
-    {
-        return $this->confirm;
-    }
-
-    /**
-     * @param null $confirm
-     *
-     * @return Task
-     */
-    public function setConfirm($confirm)
-    {
-        $this->confirm = $confirm;
-
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
     public function getOutput()
     {
         return $this->output;
@@ -171,21 +121,29 @@ class Task
     }
 
     /**
+     * @param $output
+     *
+     * @return $this
+     */
+    public function appendOutput($output)
+    {
+        $this->output[] = $output;
+
+        return $this;
+    }
+
+    /**
      * Create a new Task instance.
      *
      * @param  array  $hosts
      * @param  string $user
      * @param  string $script
-     * @param bool    $parallel
-     * @param null    $confirm
      */
-    public function __construct(array $hosts, $user, $script, $parallel = false, $confirm = null)
+    public function __construct(array $hosts, $user, $script)
     {
         $this->user = $user;
         $this->hosts = $hosts;
         $this->script = $script;
-        $this->parallel = $parallel;
-        $this->confirm = $confirm;
     }
 
 }
