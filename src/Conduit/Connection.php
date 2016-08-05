@@ -47,7 +47,7 @@ abstract class Connection
             );
         }
 
-        return [$host, $process->setTimeout(null)];
+        return [$host, $process->setTimeout($task->getTimeout())];
     }
 
     /**

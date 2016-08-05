@@ -41,6 +41,13 @@ class Task
     protected $output;
 
     /**
+     * The timeout for the function
+     *
+     * @var int
+     */
+    protected $timeout;
+
+    /**
      * @return array
      */
     public function getHosts()
@@ -133,17 +140,43 @@ class Task
     }
 
     /**
+     * Get the current timeout for the Task
+     *
+     * @return int
+     */
+    public function getTimeout()
+    {
+        return $this->timeout;
+    }
+
+    /**
+     * Set the timeout
+     *
+     * @param int $timeout
+     *
+     * @return Task
+     */
+    public function setTimeout($timeout)
+    {
+        $this->timeout = $timeout;
+
+        return $this;
+    }
+
+    /**
      * Create a new Task instance.
      *
      * @param  array  $hosts
      * @param  string $user
      * @param  string $script
+     * @param  int    $timeout
      */
-    public function __construct(array $hosts, $user, $script)
+    public function __construct(array $hosts, $user, $script, $timeout = null)
     {
         $this->user = $user;
         $this->hosts = $hosts;
         $this->script = $script;
+        $this->timeout = $timeout;
     }
 
 }
