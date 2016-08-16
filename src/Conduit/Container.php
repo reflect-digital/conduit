@@ -6,12 +6,10 @@
  * @author Matt Croft <matt.croft@reflectdigital.co.uk>
  * @copyright 2016 Matt Croft <matt.croft@reflectdigital.co.uk>
  */
-
 namespace Flux\Conduit;
 
 class Container
 {
-
     /**
      * @var \Illuminate\Support\Collection|Task[]
      */
@@ -42,9 +40,8 @@ class Container
      *
      * @param array $tasks
      */
-    public function __construct( array $tasks = [] )
+    public function __construct(array $tasks = [])
     {
         $this->tasks = collect($tasks);
     }
-
 }
