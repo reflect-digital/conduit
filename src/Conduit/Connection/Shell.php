@@ -6,7 +6,6 @@
  * @author Matt Croft <matt.croft@reflectdigital.co.uk>
  * @copyright 2016 Matt Croft <matt.croft@reflectdigital.co.uk>
  */
-
 namespace Flux\Conduit\Connection;
 
 use Flux;
@@ -14,7 +13,6 @@ use Flux\Conduit\Task;
 
 class Shell extends Flux\Conduit\Connection
 {
-
     /**
      * Run the given task over SSH.
      *
@@ -27,7 +25,8 @@ class Shell extends Flux\Conduit\Connection
     {
         $processes = [];
 
-        $callback = $callback ?: function () {};
+        $callback = $callback ?: function () {
+        };
 
         foreach ($task->hosts as $host) {
             $process = $this->getProcess($host, $task);

@@ -6,12 +6,10 @@
  * @author Matt Croft <matt.croft@reflectdigital.co.uk>
  * @copyright 2016 Matt Croft <matt.croft@reflectdigital.co.uk>
  */
-
 namespace Flux\Conduit;
 
 class Task
 {
-
     /**
      * All of the hosts to run the task on.
      *
@@ -34,14 +32,14 @@ class Task
     public $script;
 
     /**
-     * The output from the task executed
+     * The output from the task executed.
      *
      * @var array
      */
     protected $output;
 
     /**
-     * The timeout for the function
+     * The timeout for the function.
      *
      * @var int
      */
@@ -140,7 +138,7 @@ class Task
     }
 
     /**
-     * Get the current timeout for the Task
+     * Get the current timeout for the Task.
      *
      * @return int
      */
@@ -150,7 +148,7 @@ class Task
     }
 
     /**
-     * Set the timeout
+     * Set the timeout.
      *
      * @param int $timeout
      *
@@ -166,10 +164,10 @@ class Task
     /**
      * Create a new Task instance.
      *
-     * @param  array  $hosts
-     * @param  string $user
-     * @param  string $script
-     * @param  int    $timeout
+     * @param array  $hosts
+     * @param string $user
+     * @param string $script
+     * @param int    $timeout
      */
     public function __construct(array $hosts, $user, $script, $timeout = null)
     {
@@ -178,5 +176,4 @@ class Task
         $this->script = $script;
         $this->timeout = $timeout;
     }
-
 }
