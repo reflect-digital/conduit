@@ -50,12 +50,12 @@ class Conduit
     {
         $tasks = $this->getContainer()->getTasks();
 
-        $callback = $callback ?: function () {};
+        $callback = $callback ?: function () {
+        };
 
         $connection = new Conduit\Connection\Shell();
-        $tasks->each(function (Task $task, $id) use ($connection,$displayOutput,$callback) {
-
-            $connection->run($task, function ($type, $host, $line) use ($task,$displayOutput) {
+        $tasks->each(function (Task $task, $id) use ($connection, $displayOutput, $callback) {
+            $connection->run($task, function ($type, $host, $line) use ($task, $displayOutput) {
                 if (starts_with($line, 'Warning: Permanently added ')) {
                     return;
                 }
