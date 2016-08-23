@@ -8,6 +8,8 @@
  */
 namespace Flux\Conduit;
 
+use Illuminate\Support\Collection;
+
 class Task
 {
     /**
@@ -126,13 +128,14 @@ class Task
     }
 
     /**
-     * @param $output
+     * @param Collection $output
      *
      * @return $this
      */
     public function appendOutput($output)
     {
-        $this->output[] = $output;
+        $current = collect($this->output);
+        $this->output = $current->merge($output);
 
         return $this;
     }

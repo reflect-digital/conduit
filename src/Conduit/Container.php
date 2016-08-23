@@ -40,7 +40,7 @@ class Container
      *
      * @param array $tasks
      */
-    public function __construct(array $tasks = [])
+    public function __construct($tasks)
     {
         $this->tasks = collect($tasks);
     }

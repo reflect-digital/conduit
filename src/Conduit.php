@@ -46,12 +46,15 @@ class Conduit
      *
      * @param bool $displayOutput
      */
-    public function execute($displayOutput = false)
+    public function execute($displayOutput = false, \Closure $callback = null)
     {
         $tasks = $this->getContainer()->getTasks();
 
+        $callback = $callback ?: function () {};
+
         $connection = new Conduit\Connection\Shell();
-        $tasks->each(function (Task $task) use ($connection,$displayOutput) {
+        $tasks->each(function (Task $task, $id) use ($connection,$displayOutput,$callback) {
+
             $connection->run($task, function ($type, $host, $line) use ($task,$displayOutput) {
                 if (starts_with($line, 'Warning: Permanently added ')) {
                     return;
@@ -63,6 +66,8 @@ class Conduit
                     $this->displayOutput($type, $host, $line);
                 }
             });
+
+            call_user_func($callback, $id);
         });
     }
 
