@@ -36,7 +36,7 @@ abstract class Connection
             $delimiter = 'EOF-FLUX-CONDUIT';
 
             $process = new Process(
-                "ssh $host 'bash -se' << \\$delimiter".PHP_EOL
+                "ssh -o StrictHostKeyChecking=no $host 'bash -se' << \\$delimiter".PHP_EOL
                 .'set -e'.PHP_EOL
                 .$task->script.PHP_EOL
                 .$delimiter
